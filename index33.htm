@@ -1,0 +1,1842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechSolve Solutions - IT Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a73e8;
+            --primary-dark: #0d47a1;
+            --secondary: #34a853;
+            --accent: #ea4335;
+            --background: #f8f9fa;
+            --card: #ffffff;
+            --text: #202124;
+            --text-light: #5f6368;
+            --border: #dadce0;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--card);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 28px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        .search-bar {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px 40px 10px 15px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            outline: none;
+        }
+
+        .search-bar button {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-menu button {
+            background: none;
+            border: none;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        /* Hero Carousel */
+        .hero-carousel {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        .slide-content {
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            padding: 0 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 30px;
+        }
+
+        .slide-content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .slide-content p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .carousel-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+        }
+
+        .carousel-dot.active {
+            background-color: white;
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            color: var(--primary-dark);
+        }
+
+        .section-title p {
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: var(--card);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-title {
+            font-size: 22px;
+            font-weight: 500;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        .about-image {
+            height: 400px;
+            background-color: #e0e0e0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .team-member {
+            text-align: center;
+        }
+
+        .member-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: var(--text-light);
+        }
+
+        .member-name {
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .member-role {
+            color: var(--text-light);
+        }
+
+        /* Products Section */
+        .domain-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            background-color: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .products-container {
+            overflow-x: hidden;
+            margin-bottom: 40px;
+        }
+
+        .products-slider {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card {
+            min-width: 300px;
+            margin-right: 20px;
+        }
+
+        .product-image {
+            height: 200px;
+            background-color: #e0e0e0;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+        }
+
+        .product-content {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .product-caption {
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+
+        /* Solutions Section */
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .solution-card {
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .solution-icon {
+            font-size: 48px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        /* Research Section */
+        .research-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .publication-card {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .publication-image {
+            height: 180px;
+            background-color: #e0e0e0;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+        }
+
+        .publication-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .publication-title {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .publication-authors {
+            color: var(--text-light);
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .publication-domain {
+            display: inline-block;
+            background-color: rgba(26, 115, 232, 0.1);
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+
+        .publication-abstract {
+            color: var(--text-light);
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .publication-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .rating {
+            color: #fbbc05;
+        }
+
+        /* Repository Section */
+        .repository-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .repo-card {
+            height: 100%;
+        }
+
+        .repo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .repo-title {
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .repo-badge {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .repo-badge.free {
+            background-color: rgba(52, 168, 83, 0.1);
+            color: var(--secondary);
+        }
+
+        .repo-badge.premium {
+            background-color: rgba(234, 67, 53, 0.1);
+            color: var(--accent);
+        }
+
+        .repo-description {
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+
+        .repo-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .repo-tag {
+            background-color: rgba(0, 0, 0, 0.05);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .repo-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        /* Contact Section */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .contact-form {
+            background-color: var(--card);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .info-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .info-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(26, 115, 232, 0.1);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .info-content h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .info-content p {
+            color: var(--text-light);
+        }
+
+        .map-container {
+            height: 300px;
+            background-color: #e0e0e0;
+            border-radius: 8px;
+            margin-top: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            display: none;
+            background-color: var(--card);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .admin-panel.active {
+            display: block;
+        }
+
+        .admin-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+
+        .admin-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            font-weight: 500;
+        }
+
+        .admin-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .admin-content {
+            display: none;
+        }
+
+        .admin-content.active {
+            display: block;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .admin-table th,
+        .admin-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .admin-table th {
+            background-color: rgba(26, 115, 232, 0.1);
+            font-weight: 500;
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .admin-actions button {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-edit {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-delete {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .btn-approve {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .about-content,
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-image {
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 5px 10px;
+            }
+            
+            .search-bar {
+                width: 100%;
+            }
+            
+            .slide-content h1 {
+                font-size: 32px;
+            }
+            
+            .slide-content p {
+                font-size: 16px;
+            }
+            
+            .hero-carousel {
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .product-card {
+                min-width: 250px;
+            }
+            
+            .publication-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-cube"></i>
+                    TechSolve Solutions
+                </div>
+                
+                <nav>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#products">Products</a></li>
+                        <li><a href="#solutions">Solutions</a></li>
+                        <li><a href="#research">Research</a></li>
+                        <li><a href="#repository">Repository</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="search-bar">
+                    <input type="text" placeholder="Search...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                
+                <div class="user-menu">
+                    <button id="loginBtn"><i class="fas fa-sign-in-alt"></i> Login</button>
+                    <button id="adminBtn" style="display: none;"><i class="fas fa-cog"></i> Admin</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Carousel -->
+    <section id="home" class="hero-carousel">
+        <div class="carousel-slide active" style="background-image: url('https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+            <div class="slide-content">
+                <h1>Innovative IT Solutions</h1>
+                <p>Transforming businesses with cutting-edge technology and tailored software solutions</p>
+                <button class="btn btn-primary">Explore More</button>
+            </div>
+        </div>
+        <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+            <div class="slide-content">
+                <h1>Research-Driven Development</h1>
+                <p>Leveraging the latest research to create powerful, efficient software solutions</p>
+                <button class="btn btn-primary">Explore More</button>
+            </div>
+        </div>
+        <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+            <div class="slide-content">
+                <h1>Global Expertise</h1>
+                <p>Serving clients worldwide with industry-specific solutions and exceptional support</p>
+                <button class="btn btn-primary">Explore More</button>
+            </div>
+        </div>
+        <div class="carousel-controls">
+            <div class="carousel-dot active" data-slide="0"></div>
+            <div class="carousel-dot" data-slide="1"></div>
+            <div class="carousel-dot" data-slide="2"></div>
+        </div>
+    </section>
+
+    <!-- Admin Panel (Hidden by default) -->
+    <div class="container">
+        <div id="adminPanel" class="admin-panel">
+            <h2>Admin Dashboard</h2>
+            <div class="admin-tabs">
+                <div class="admin-tab active" data-tab="products">Products</div>
+                <div class="admin-tab" data-tab="solutions">Solutions</div>
+                <div class="admin-tab" data-tab="publications">Publications</div>
+                <div class="admin-tab" data-tab="users">Users</div>
+            </div>
+            
+            <div id="products-tab" class="admin-content active">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                    <h3>Manage Products</h3>
+                    <button class="btn btn-primary">Add New Product</button>
+                </div>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Domain</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Automation Suite</td>
+                            <td>Automation</td>
+                            <td>Active</td>
+                            <td class="admin-actions">
+                                <button class="btn-edit">Edit</button>
+                                <button class="btn-delete">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Healthcare Platform</td>
+                            <td>Healthcare</td>
+                            <td>Active</td>
+                            <td class="admin-actions">
+                                <button class="btn-edit">Edit</button>
+                                <button class="btn-delete">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>E-commerce Solution</td>
+                            <td>Ecommerce</td>
+                            <td>Draft</td>
+                            <td class="admin-actions">
+                                <button class="btn-edit">Edit</button>
+                                <button class="btn-delete">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div id="solutions-tab" class="admin-content">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                    <h3>Manage Solutions</h3>
+                    <button class="btn btn-primary">Add New Solution</button>
+                </div>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Cloud Migration</td>
+                            <td>Infrastructure</td>
+                            <td>Active</td>
+                            <td class="admin-actions">
+                                <button class="btn-edit">Edit</button>
+                                <button class="btn-delete">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Data Analytics</td>
+                            <td>Business Intelligence</td>
+                            <td>Active</td>
+                            <td class="admin-actions">
+                                <button class="btn-edit">Edit</button>
+                                <button class="btn-delete">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div id="publications-tab" class="admin-content">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                    <h3>Manage Publications</h3>
+                    <button class="btn btn-primary">Add New Publication</button>
+                </div>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Authors</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>AI in Healthcare</td>
+                            <td>Dr. Smith, J. Doe</td>
+                            <td>Published</td>
+                            <td class="admin-actions">
+                                <button class="btn-edit">Edit</button>
+                                <button class="btn-delete">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Cloud Security</td>
+                            <td>M. Johnson</td>
+                            <td>Pending Review</td>
+                            <td class="admin-actions">
+                                <button class="btn-approve">Approve</button>
+                                <button class="btn-delete">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div id="users-tab" class="admin-content">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                    <h3>Manage Users</h3>
+                </div>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>John Doe</td>
+                            <td>john@example.com</td>
+                            <td>Admin</td>
+                            <td>Active</td>
+                            <td class="admin-actions">
+                                <button class="btn-edit">Edit</button>
+                                <button class="btn-delete">Block</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Jane Smith</td>
+                            <td>jane@example.com</td>
+                            <td>User</td>
+                            <td>Active</td>
+                            <td class="admin-actions">
+                                <button class="btn-edit">Edit</button>
+                                <button class="btn-delete">Block</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>About Us</h2>
+                <p>Leading the way in innovative IT solutions and software development</p>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Our Mission</h3>
+                    <p>To transform businesses through cutting-edge technology solutions that drive efficiency, innovation, and growth.</p>
+                    
+                    <h3>Our Vision</h3>
+                    <p>To be the global leader in software development, known for our innovative solutions and exceptional client service.</p>
+                    
+                    <h3>Our Values</h3>
+                    <p>We believe in innovation, integrity, excellence, and collaboration. These values guide everything we do.</p>
+                </div>
+                
+                <div class="about-image">
+                    <i class="fas fa-building" style="font-size: 80px;"></i>
+                </div>
+            </div>
+            
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="member-name">John Smith</div>
+                    <div class="member-role">CEO & Founder</div>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="member-name">Sarah Johnson</div>
+                    <div class="member-role">CTO</div>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="member-name">Michael Chen</div>
+                    <div class="member-role">Head of Research</div>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="member-name">Emily Davis</div>
+                    <div class="member-role">Lead Developer</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="section" style="background-color: #f1f3f5;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Products</h2>
+                <p>Industry-specific software solutions designed to meet your unique business needs</p>
+            </div>
+            
+            <div class="domain-filter">
+                <div class="filter-btn active">All</div>
+                <div class="filter-btn">Automation</div>
+                <div class="filter-btn">Digital Services</div>
+                <div class="filter-btn">Healthcare</div>
+                <div class="filter-btn">Education</div>
+                <div class="filter-btn">Finance</div>
+                <div class="filter-btn">Ecommerce</div>
+                <div class="filter-btn">Transportation</div>
+                <div class="filter-btn">Entertainment</div>
+                <div class="filter-btn">Human Resources</div>
+            </div>
+            
+            <div class="products-container">
+                <div class="products-slider">
+                    <div class="product-card card">
+                        <div class="product-image">
+                            <i class="fas fa-robot" style="font-size: 48px;"></i>
+                        </div>
+                        <div class="product-content">
+                            <div class="product-title">Automation Suite</div>
+                            <div class="product-caption">Streamline your business processes with our comprehensive automation tools.</div>
+                            <button class="btn btn-primary">Learn More</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card card">
+                        <div class="product-image">
+                            <i class="fas fa-heartbeat" style="font-size: 48px;"></i>
+                        </div>
+                        <div class="product-content">
+                            <div class="product-title">Healthcare Platform</div>
+                            <div class="product-caption">Revolutionary patient management and telemedicine solutions.</div>
+                            <button class="btn btn-primary">Learn More</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card card">
+                        <div class="product-image">
+                            <i class="fas fa-graduation-cap" style="font-size: 48px;"></i>
+                        </div>
+                        <div class="product-content">
+                            <div class="product-title">Education Portal</div>
+                            <div class="product-caption">Interactive learning management system for modern education.</div>
+                            <button class="btn btn-primary">Learn More</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card card">
+                        <div class="product-image">
+                            <i class="fas fa-chart-line" style="font-size: 48px;"></i>
+                        </div>
+                        <div class="product-content">
+                            <div class="product-title">Finance Manager</div>
+                            <div class="product-caption">Comprehensive financial planning and analysis tools.</div>
+                            <button class="btn btn-primary">Learn More</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="products-container">
+                <div class="products-slider">
+                    <div class="product-card card">
+                        <div class="product-image">
+                            <i class="fas fa-shopping-cart" style="font-size: 48px;"></i>
+                        </div>
+                        <div class="product-content">
+                            <div class="product-title">E-commerce Solution</div>
+                            <div class="product-caption">Complete online store management with advanced analytics.</div>
+                            <button class="btn btn-primary">Learn More</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card card">
+                        <div class="product-image">
+                            <i class="fas fa-truck" style="font-size: 48px;"></i>
+                        </div>
+                        <div class="product-content">
+                            <div class="product-title">Logistics Tracker</div>
+                            <div class="product-caption">Real-time shipment tracking and supply chain optimization.</div>
+                            <button class="btn btn-primary">Learn More</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card card">
+                        <div class="product-image">
+                            <i class="fas fa-film" style="font-size: 48px;"></i>
+                        </div>
+                        <div class="product-content">
+                            <div class="product-title">Media Platform</div>
+                            <div class="product-caption">Content management and distribution for entertainment industry.</div>
+                            <button class="btn btn-primary">Learn More</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card card">
+                        <div class="product-image">
+                            <i class="fas fa-users" style="font-size: 48px;"></i>
+                        </div>
+                        <div class="product-content">
+                            <div class="product-title">HR Management</div>
+                            <div class="product-caption">Complete human resource management and payroll system.</div>
+                            <button class="btn btn-primary">Learn More</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions Section -->
+    <section id="solutions" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Solutions</h2>
+                <p>Tailored approaches to solve your most challenging business problems</p>
+            </div>
+            
+            <div class="solutions-grid">
+                <div class="solution-card card">
+                    <div class="solution-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <div class="card-title">Cloud Migration</div>
+                    <p>Seamlessly transition your infrastructure to the cloud with our expert guidance and support.</p>
+                </div>
+                
+                <div class="solution-card card">
+                    <div class="solution-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="card-title">Cybersecurity</div>
+                    <p>Protect your business with our comprehensive security solutions and threat detection systems.</p>
+                </div>
+                
+                <div class="solution-card card">
+                    <div class="solution-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="card-title">Data Analytics</div>
+                    <p>Transform raw data into actionable insights with our advanced analytics and visualization tools.</p>
+                </div>
+                
+                <div class="solution-card card">
+                    <div class="solution-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="card-title">Mobile Development</div>
+                    <p>Create engaging mobile experiences for iOS and Android with our cross-platform solutions.</p>
+                </div>
+                
+                <div class="solution-card card">
+                    <div class="solution-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <div class="card-title">Process Automation</div>
+                    <p>Streamline operations and reduce costs with intelligent automation of business processes.</p>
+                </div>
+                
+                <div class="solution-card card">
+                    <div class="solution-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="card-title">AI Integration</div>
+                    <p>Harness the power of artificial intelligence to enhance decision-making and customer experiences.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research & Publications Section -->
+    <section id="research" class="section" style="background-color: #f1f3f5;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Research & Publications</h2>
+                <p>Explore our latest research findings and technical publications</p>
+            </div>
+            
+            <div class="domain-filter">
+                <div class="filter-btn active">All</div>
+                <div class="filter-btn">AI</div>
+                <div class="filter-btn">Machine Learning</div>
+                <div class="filter-btn">Cloud Computing</div>
+                <div class="filter-btn">Cybersecurity</div>
+                <div class="filter-btn">Data Science</div>
+            </div>
+            
+            <div class="research-container">
+                <div class="publication-card card">
+                    <div class="publication-image">
+                        <i class="fas fa-file-alt" style="font-size: 48px;"></i>
+                    </div>
+                    <div class="publication-content">
+                        <div class="publication-title">Advancements in AI for Healthcare Diagnostics</div>
+                        <div class="publication-authors">Dr. John Smith, Sarah Johnson, Michael Chen</div>
+                        <div class="publication-domain">AI</div>
+                        <div class="publication-abstract">This paper explores the latest developments in artificial intelligence applications for medical diagnostics, including deep learning models for image analysis and predictive analytics for patient outcomes.</div>
+                        <div class="publication-actions">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span>4.0</span>
+                            </div>
+                            <button class="btn btn-primary">Download</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="publication-card card">
+                    <div class="publication-image">
+                        <i class="fas fa-file-alt" style="font-size: 48px;"></i>
+                    </div>
+                    <div class="publication-content">
+                        <div class="publication-title">Machine Learning Approaches for Financial Forecasting</div>
+                        <div class="publication-authors">Emily Davis, Robert Wilson, Lisa Anderson</div>
+                        <div class="publication-domain">Machine Learning</div>
+                        <div class="publication-abstract">A comprehensive study of machine learning techniques applied to financial market prediction, including ensemble methods and neural network architectures.</div>
+                        <div class="publication-actions">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>5.0</span>
+                            </div>
+                            <button class="btn btn-primary">Download</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="publication-card card">
+                    <div class="publication-image">
+                        <i class="fas fa-file-alt" style="font-size: 48px;"></i>
+                    </div>
+                    <div class="publication-content">
+                        <div class="publication-title">Security Challenges in Multi-Cloud Environments</div>
+                        <div class="publication-authors">David Brown, Jennifer Lee, Thomas Garcia</div>
+                        <div class="publication-domain">Cloud Computing</div>
+                        <div class="publication-abstract">An analysis of security vulnerabilities in multi-cloud deployments and proposed frameworks for enhanced protection and compliance.</div>
+                        <div class="publication-actions">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span>4.2</span>
+                            </div>
+                            <button class="btn btn-primary">Download</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="publication-card card">
+                    <div class="publication-image">
+                        <i class="fas fa-file-alt" style="font-size: 48px;"></i>
+                    </div>
+                    <div class="publication-content">
+                        <div class="publication-title">Zero-Trust Architecture Implementation Guide</div>
+                        <div class="publication-authors">Richard Taylor, Amanda White, Christopher Moore</div>
+                        <div class="publication-domain">Cybersecurity</div>
+                        <div class="publication-abstract">A practical guide to implementing zero-trust security models in enterprise environments, with case studies and best practices.</div>
+                        <div class="publication-actions">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>4.8</span>
+                            </div>
+                            <button class="btn btn-primary">Download</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="publication-card card">
+                    <div class="publication-image">
+                        <i class="fas fa-file-alt" style="font-size: 48px;"></i>
+                    </div>
+                    <div class="publication-content">
+                        <div class="publication-title">Big Data Processing Techniques for IoT Applications</div>
+                        <div class="publication-authors">Michelle Harris, Daniel Clark, Patricia Lewis</div>
+                        <div class="publication-domain">Data Science</div>
+                        <div class="publication-abstract">Exploration of efficient data processing methodologies for Internet of Things ecosystems, focusing on real-time analytics and edge computing.</div>
+                        <div class="publication-actions">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span>4.3</span>
+                            </div>
+                            <button class="btn btn-primary">Download</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="publication-card card">
+                    <div class="publication-image">
+                        <i class="fas fa-file-alt" style="font-size: 48px;"></i>
+                    </div>
+                    <div class="publication-content">
+                        <div class="publication-title">Natural Language Processing for Customer Service Automation</div>
+                        <div class="publication-authors">Kevin Walker, Nancy Hall, George Young</div>
+                        <div class="publication-domain">AI</div>
+                        <div class="publication-abstract">Development of advanced NLP models for automated customer service interactions, including sentiment analysis and intent recognition.</div>
+                        <div class="publication-actions">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span>3.9</span>
+                            </div>
+                            <button class="btn btn-primary">Download</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Repository Section -->
+    <section id="repository" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Software Repository</h2>
+                <p>Access our collection of open-source and premium software assets</p>
+            </div>
+            
+            <div class="repository-container">
+                <div class="repo-card card">
+                    <div class="repo-header">
+                        <div class="repo-title">Data Visualization Library</div>
+                        <div class="repo-badge free">Free</div>
+                    </div>
+                    <div class="repo-description">A powerful JavaScript library for creating interactive data visualizations and dashboards.</div>
+                    <div class="repo-tags">
+                        <div class="repo-tag">JavaScript</div>
+                        <div class="repo-tag">Data Visualization</div>
+                        <div class="repo-tag">Charts</div>
+                    </div>
+                    <div class="repo-info">
+                        <div>Version: 2.1.0</div>
+                        <div>License: MIT</div>
+                    </div>
+                    <button class="btn btn-secondary">Download from GitHub</button>
+                </div>
+                
+                <div class="repo-card card">
+                    <div class="repo-header">
+                        <div class="repo-title">API Gateway Framework</div>
+                        <div class="repo-badge premium">Premium</div>
+                    </div>
+                    <div class="repo-description">Enterprise-grade API management solution with advanced security and analytics features.</div>
+                    <div class="repo-tags">
+                        <div class="repo-tag">Node.js</div>
+                        <div class="repo-tag">API Management</div>
+                        <div class="repo-tag">Security</div>
+                    </div>
+                    <div class="repo-info">
+                        <div>Version: 3.5.2</div>
+                        <div>License: Commercial</div>
+                    </div>
+                    <button class="btn btn-accent">Contact Admin</button>
+                </div>
+                
+                <div class="repo-card card">
+                    <div class="repo-header">
+                        <div class="repo-title">Machine Learning Toolkit</div>
+                        <div class="repo-badge free">Free</div>
+                    </div>
+                    <div class="repo-description">Comprehensive Python toolkit for machine learning model development and deployment.</div>
+                    <div class="repo-tags">
+                        <div class="repo-tag">Python</div>
+                        <div class="repo-tag">Machine Learning</div>
+                        <div class="repo-tag">AI</div>
+                    </div>
+                    <div class="repo-info">
+                        <div>Version: 1.8.4</div>
+                        <div>License: Apache 2.0</div>
+                    </div>
+                    <button class="btn btn-secondary">Download from GitHub</button>
+                </div>
+                
+                <div class="repo-card card">
+                    <div class="repo-header">
+                        <div class="repo-title">Mobile App SDK</div>
+                        <div class="repo-badge premium">Premium</div>
+                    </div>
+                    <div class="repo-description">Cross-platform mobile development SDK with native performance and extensive component library.</div>
+                    <div class="repo-tags">
+                        <div class="repo-tag">Mobile</div>
+                        <div class="repo-tag">Cross-Platform</div>
+                        <div class="repo-tag">SDK</div>
+                    </div>
+                    <div class="repo-info">
+                        <div>Version: 4.2.1</div>
+                        <div>License: Commercial</div>
+                    </div>
+                    <button class="btn btn-accent">Contact Admin</button>
+                </div>
+                
+                <div class="repo-card card">
+                    <div class="repo-header">
+                        <div class="repo-title">Security Scanner</div>
+                        <div class="repo-badge free">Free</div>
+                    </div>
+                    <div class="repo-description">Automated vulnerability scanning tool for web applications and APIs.</div>
+                    <div class="repo-tags">
+                        <div class="repo-tag">Security</div>
+                        <div class="repo-tag">Scanning</div>
+                        <div class="repo-tag">DevOps</div>
+                    </div>
+                    <div class="repo-info">
+                        <div>Version: 1.3.7</div>
+                        <div>License: GPL-3.0</div>
+                    </div>
+                    <button class="btn btn-secondary">Download from GitHub</button>
+                </div>
+                
+                <div class="repo-card card">
+                    <div class="repo-header">
+                        <div class="repo-title">Blockchain Framework</div>
+                        <div class="repo-badge premium">Premium</div>
+                    </div>
+                    <div class="repo-description">Enterprise blockchain framework for building secure, scalable distributed applications.</div>
+                    <div class="repo-tags">
+                        <div class="repo-tag">Blockchain</div>
+                        <div class="repo-tag">Distributed</div>
+                        <div class="repo-tag">Enterprise</div>
+                    </div>
+                    <div class="repo-info">
+                        <div>Version: 2.0.5</div>
+                        <div>License: Commercial</div>
+                    </div>
+                    <button class="btn btn-accent">Contact Admin</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section" style="background-color: #f1f3f5;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contact Us</h2>
+                <p>Get in touch with our team to discuss your project requirements</p>
+            </div>
+            
+            <div class="contact-container">
+                <div class="contact-form">
+                    <h3>Send Us a Message</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+                
+                <div class="contact-info">
+                    <h3>Get in Touch</h3>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="info-content">
+                            <h3>Our Location</h3>
+                            <p>123 Tech Street, Silicon Valley, CA 94025</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div class="info-content">
+                            <h3>Phone Number</h3>
+                            <p>+1 (555) 123-4567</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="info-content">
+                            <h3>Email Address</h3>
+                            <p>info@techsolvesolutions.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="map-container">
+                        <i class="fas fa-map-marked-alt" style="font-size: 48px;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>TechSolve Solutions</h3>
+                    <p>Leading provider of innovative IT solutions and software development services.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#products">Products</a></li>
+                        <li><a href="#solutions">Solutions</a></li>
+                        <li><a href="#research">Research</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#">Software Development</a></li>
+                        <li><a href="#">Cloud Solutions</a></li>
+                        <li><a href="#">Cybersecurity</a></li>
+                        <li><a href="#">Data Analytics</a></li>
+                        <li><a href="#">Consulting</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li>123 Tech Street, Silicon Valley, CA</li>
+                        <li>+1 (555) 123-4567</li>
+                        <li>info@techsolvesolutions.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 TechSolve Solutions. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Carousel functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.carousel-slide');
+            const dots = document.querySelectorAll('.carousel-dot');
+            let currentSlide = 0;
+            
+            function showSlide(index) {
+                slides.forEach(slide => slide.classList.remove('active'));
+                dots.forEach(dot => dot.classList.remove('active'));
+                
+                slides[index].classList.add('active');
+                dots[index].classList.add('active');
+                currentSlide = index;
+            }
+            
+            function nextSlide() {
+                let next = (currentSlide + 1) % slides.length;
+                showSlide(next);
+            }
+            
+            // Auto-advance carousel
+            setInterval(nextSlide, 5000);
+            
+            // Dot navigation
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    showSlide(index);
+                });
+            });
+            
+            // Product slider functionality
+            const productSliders = document.querySelectorAll('.products-slider');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    // In a real implementation, this would filter the products
+                });
+            });
+            
+            // Admin panel functionality
+            const loginBtn = document.getElementById('loginBtn');
+            const adminBtn = document.getElementById('adminBtn');
+            const adminPanel = document.getElementById('adminPanel');
+            const adminTabs = document.querySelectorAll('.admin-tab');
+            const adminContents = document.querySelectorAll('.admin-content');
+            
+            loginBtn.addEventListener('click', function() {
+                // Simulate login
+                this.innerHTML = '<i class="fas fa-sign-out-alt"></i> Logout';
+                adminBtn.style.display = 'block';
+                
+                // Change to logout functionality
+                this.onclick = function() {
+                    this.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
+                    adminBtn.style.display = 'none';
+                    adminPanel.classList.remove('active');
+                };
+            });
+            
+            adminBtn.addEventListener('click', function() {
+                adminPanel.classList.toggle('active');
+            });
+            
+            adminTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    adminTabs.forEach(t => t.classList.remove('active'));
+                    adminContents.forEach(c => c.classList.remove('active'));
+                    
+                    this.classList.add('active');
+                    document.getElementById(`${tabId}-tab`).classList.add('active');
+                });
+            });
+            
+            // Contact form submission
+            const contactForm = document.getElementById('contactForm');
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // In a real implementation, this would send the form data to a server
+                alert('Thank you for your message! We will get back to you soon.');
+                this.reset();
+            });
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
