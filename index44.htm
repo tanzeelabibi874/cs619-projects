@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Islamic Quiz Master - Test Your Knowledge</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a5276;
+            --secondary: #2874a6;
+            --accent: #d4ac0d;
+            --success: #27ae60;
+            --danger: #e74c3c;
+            --light: #f8f9fa;
+            --dark: #343a40;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: var(--dark);
+        }
+        
+        .navbar {
+            background-color: var(--primary);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: white !important;
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(26, 82, 118, 0.8), rgba(26, 82, 118, 0.8)), url('https://images.unsplash.com/photo-1577968897964-8c5c5b7b3b3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .btn-primary-custom {
+            background-color: var(--accent);
+            border: none;
+            padding: 10px 25px;
+            font-weight: 600;
+            border-radius: 30px;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary-custom:hover {
+            background-color: #b7950b;
+            transform: translateY(-2px);
+        }
+        
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            margin-bottom: 20px;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            border-radius: 10px 10px 0 0 !important;
+        }
+        
+        .quiz-category {
+            text-align: center;
+            padding: 20px;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+        
+        .quiz-category:hover {
+            background-color: rgba(26, 82, 118, 0.1);
+        }
+        
+        .quiz-category i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .quiz-category h5 {
+            font-weight: 600;
+        }
+        
+        .section-title {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+        
+        .timer {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--danger);
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .question-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .options-container {
+            margin-bottom: 20px;
+        }
+        
+        .option {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .option:hover {
+            background-color: rgba(26, 82, 118, 0.1);
+        }
+        
+        .option.selected {
+            background-color: rgba(26, 82, 118, 0.2);
+            border-color: var(--primary);
+        }
+        
+        .option.correct {
+            background-color: rgba(39, 174, 96, 0.2);
+            border-color: var(--success);
+        }
+        
+        .option.incorrect {
+            background-color: rgba(231, 76, 60, 0.2);
+            border-color: var(--danger);
+        }
+        
+        .quiz-progress {
+            height: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .quiz-progress-bar {
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.5s;
+        }
+        
+        .profile-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-right: 20px;
+        }
+        
+        .profile-info h3 {
+            margin-bottom: 5px;
+        }
+        
+        .quiz-history {
+            margin-top: 20px;
+        }
+        
+        .quiz-history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .quiz-history-item:last-child {
+            border-bottom: none;
+        }
+        
+        .admin-panel {
+            display: none;
+        }
+        
+        .admin-panel.active {
+            display: block;
+        }
+        
+        .admin-tabs {
+            display: flex;
+            border-bottom: 1px solid #dee2e6;
+            margin-bottom: 20px;
+        }
+        
+        .admin-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--dark);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .admin-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        
+        .admin-content {
+            display: none;
+        }
+        
+        .admin-content.active {
+            display: block;
+        }
+        
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .admin-table th,
+        .admin-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .admin-table th {
+            background-color: rgba(26, 82, 118, 0.1);
+            font-weight: 600;
+        }
+        
+        .admin-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .admin-actions button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .btn-edit {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-delete {
+            background-color: var(--danger);
+            color: white;
+        }
+        
+        .btn-approve {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .btn-reject {
+            background-color: var(--danger);
+            color: white;
+        }
+        
+        .stats-card {
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        
+        .stats-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .stats-card h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .stats-card p {
+            color: #6c757d;
+        }
+        
+        footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+        
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            margin-right: 15px;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 1.2rem;
+            margin-right: 15px;
+            transition: transform 0.3s;
+        }
+        
+        .social-icons a:hover {
+            transform: translateY(-3px);
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .quiz-category {
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-mosque me-2"></i>Islamic Quiz Master
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#categories">Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="loginBtn">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="adminBtn" style="display: none;">Admin</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+        <div class="container">
+            <h1 class="hero-title">Test Your Islamic Knowledge</h1>
+            <p class="hero-subtitle">Challenge yourself with quizzes on Quran, Hadith, Islamic History, and more. Join thousands of Muslims in deepening their understanding of Islam.</p>
+            <button class="btn btn-primary-custom btn-lg" id="startQuizBtn">Start Quiz Now</button>
+        </div>
+    </section>
+
+    <!-- Admin Panel (Hidden by default) -->
+    <div class="container mt-5">
+        <div id="adminPanel" class="admin-panel">
+            <h2 class="section-title">Admin Dashboard</h2>
+            
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <i class="fas fa-users"></i>
+                        <h3>1,250</h3>
+                        <p>Total Users</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <i class="fas fa-question-circle"></i>
+                        <h3>450</h3>
+                        <p>Total Quizzes</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <i class="fas fa-play-circle"></i>
+                        <h3>5,780</h3>
+                        <p>Quiz Attempts</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>78%</h3>
+                        <p>Avg. Score</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="admin-tabs">
+                <div class="admin-tab active" data-tab="users">Manage Users</div>
+                <div class="admin-tab" data-tab="quizzes">Moderate Quizzes</div>
+                <div class="admin-tab" data-tab="activity">Platform Activity</div>
+            </div>
+            
+            <div id="users-tab" class="admin-content active">
+                <div class="d-flex justify-content-between mb-3">
+                    <h3>User Management</h3>
+                    <button class="btn btn-primary">Add New User</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Ahmed Hassan</td>
+                                <td>ahmed@example.com</td>
+                                <td>User</td>
+                                <td>Active</td>
+                                <td class="admin-actions">
+                                    <button class="btn-edit">Edit</button>
+                                    <button class="btn-delete">Suspend</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Fatima Ali</td>
+                                <td>fatima@example.com</td>
+                                <td>User</td>
+                                <td>Active</td>
+                                <td class="admin-actions">
+                                    <button class="btn-edit">Edit</button>
+                                    <button class="btn-delete">Suspend</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Mohammed Ibrahim</td>
+                                <td>mohammed@example.com</td>
+                                <td>User</td>
+                                <td>Suspended</td>
+                                <td class="admin-actions">
+                                    <button class="btn-edit">Edit</button>
+                                    <button class="btn-delete">Activate</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div id="quizzes-tab" class="admin-content">
+                <div class="d-flex justify-content-between mb-3">
+                    <h3>Quiz Moderation</h3>
+                    <button class="btn btn-primary">Add New Quiz</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Created By</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Quran Quiz - Level 1</td>
+                                <td>Quran</td>
+                                <td>Admin</td>
+                                <td>Approved</td>
+                                <td class="admin-actions">
+                                    <button class="btn-edit">Edit</button>
+                                    <button class="btn-delete">Remove</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Prophets of Islam</td>
+                                <td>Islamic History</td>
+                                <td>User: Ahmed</td>
+                                <td>Pending</td>
+                                <td class="admin-actions">
+                                    <button class="btn-approve">Approve</button>
+                                    <button class="btn-reject">Reject</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Hadith Collection</td>
+                                <td>Hadith</td>
+                                <td>Admin</td>
+                                <td>Approved</td>
+                                <td class="admin-actions">
+                                    <button class="btn-edit">Edit</button>
+                                    <button class="btn-delete">Remove</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div id="activity-tab" class="admin-content">
+                <h3>Platform Activity</h3>
+                <div class="card">
+                    <div class="card-header">
+                        Recent Activity
+                    </div>
+                    <div class="card-body">
+                        <div class="activity-item d-flex justify-content-between border-bottom py-2">
+                            <div>
+                                <strong>Ahmed Hassan</strong> completed <strong>Quran Quiz - Level 1</strong>
+                            </div>
+                            <div class="text-muted">2 hours ago</div>
+                        </div>
+                        <div class="activity-item d-flex justify-content-between border-bottom py-2">
+                            <div>
+                                <strong>Fatima Ali</strong> registered a new account
+                            </div>
+                            <div class="text-muted">5 hours ago</div>
+                        </div>
+                        <div class="activity-item d-flex justify-content-between border-bottom py-2">
+                            <div>
+                                <strong>Mohammed Ibrahim</strong> created <strong>Prophets of Islam</strong> quiz
+                            </div>
+                            <div class="text-muted">1 day ago</div>
+                        </div>
+                        <div class="activity-item d-flex justify-content-between py-2">
+                            <div>
+                                <strong>Admin</strong> approved <strong>Hadith Collection</strong> quiz
+                            </div>
+                            <div class="text-muted">2 days ago</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quiz Categories Section -->
+    <section class="container my-5" id="categories">
+        <h2 class="section-title">Quiz Categories</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="quiz-category" data-category="quran">
+                    <i class="fas fa-book-quran"></i>
+                    <h5>Quran</h5>
+                    <p>Test your knowledge of the Holy Quran</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="quiz-category" data-category="hadith">
+                    <i class="fas fa-moon"></i>
+                    <h5>Hadith</h5>
+                    <p>Learn about the sayings of Prophet Muhammad (PBUH)</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="quiz-category" data-category="history">
+                    <i class="fas fa-landmark"></i>
+                    <h5>Islamic History</h5>
+                    <p>Explore the rich history of Islam</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="quiz-category" data-category="prophets">
+                    <i class="fas fa-users"></i>
+                    <h5>Prophets</h5>
+                    <p>Learn about the prophets of Islam</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="quiz-category" data-category="fiqh">
+                    <i class="fas fa-balance-scale"></i>
+                    <h5>Fiqh</h5>
+                    <p>Understand Islamic jurisprudence</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="quiz-category" data-category="seerah">
+                    <i class="fas fa-mosque"></i>
+                    <h5>Seerah</h5>
+                    <p>Study the life of Prophet Muhammad (PBUH)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Interface (Hidden by default) -->
+    <div class="container my-5">
+        <div id="quizContainer" style="display: none;">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">Islamic Quiz</h4>
+                    <div class="timer" id="timer">05:00</div>
+                </div>
+                <div class="card-body">
+                    <div class="quiz-progress">
+                        <div class="quiz-progress-bar" id="progressBar"></div>
+                    </div>
+                    <div class="question-container">
+                        <div class="question-text" id="questionText">Loading question...</div>
+                        <div class="options-container" id="optionsContainer">
+                            <!-- Options will be dynamically added here -->
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-outline-primary" id="prevBtn" disabled>Previous</button>
+                            <button class="btn btn-primary" id="nextBtn">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quiz Results (Hidden by default) -->
+    <div class="container my-5">
+        <div id="resultsContainer" style="display: none;">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0">Quiz Results</h4>
+                </div>
+                <div class="card-body text-center">
+                    <div class="mb-4">
+                        <h2>Your Score: <span id="scoreValue">0</span>%</h2>
+                        <div class="progress" style="height: 25px;">
+                            <div class="progress-bar" role="progressbar" id="scoreProgressBar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p id="resultMessage"></p>
+                    </div>
+                    <div class="d-flex justify-content-center gap-3">
+                        <button class="btn btn-primary" id="retakeBtn">Retake Quiz</button>
+                        <button class="btn btn-success" id="downloadBtn">Download Results</button>
+                        <button class="btn btn-outline-primary" id="homeBtn">Back to Home</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Profile (Hidden by default) -->
+    <div class="container my-5">
+        <div id="profileContainer" style="display: none;">
+            <h2 class="section-title">User Profile</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="profile-card">
+                        <div class="profile-header">
+                            <div class="profile-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="profile-info">
+                                <h3 id="profileName">User Name</h3>
+                                <p id="profileEmail">user@example.com</p>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <h5>Account Information</h5>
+                            <p><strong>Member Since:</strong> Jan 1, 2023</p>
+                            <p><strong>Last Login:</strong> Today</p>
+                        </div>
+                        <button class="btn btn-primary w-100">Edit Profile</button>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="profile-card">
+                        <h4 class="mb-4">Quiz History</h4>
+                        <div class="quiz-history" id="quizHistory">
+                            <div class="quiz-history-item">
+                                <div>
+                                    <strong>Quran Quiz - Level 1</strong>
+                                    <div class="text-muted">Jan 15, 2023</div>
+                                </div>
+                                <div>
+                                    <span class="badge bg-success">85%</span>
+                                    <button class="btn btn-sm btn-outline-primary">View Details</button>
+                                </div>
+                            </div>
+                            <div class="quiz-history-item">
+                                <div>
+                                    <strong>Prophets of Islam</strong>
+                                    <div class="text-muted">Jan 10, 2023</div>
+                                </div>
+                                <div>
+                                    <span class="badge bg-warning">70%</span>
+                                    <button class="btn btn-sm btn-outline-primary">View Details</button>
+                                </div>
+                            </div>
+                            <div class="quiz-history-item">
+                                <div>
+                                    <strong>Islamic History</strong>
+                                    <div class="text-muted">Jan 5, 2023</div>
+                                </div>
+                                <div>
+                                    <span class="badge bg-success">90%</span>
+                                    <button class="btn btn-sm btn-outline-primary">View Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section class="container my-5" id="about">
+        <h2 class="section-title">About Islamic Quiz Master</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Our Mission</h4>
+                        <p class="card-text">Islamic Quiz Master aims to provide an engaging platform for Muslims to test and enhance their knowledge of Islam. Our quizzes cover various aspects of Islamic teachings, history, and practices, making learning both fun and educational.</p>
+                        <p class="card-text">We believe that continuous learning is essential for spiritual growth, and our platform is designed to facilitate this journey in an interactive and accessible way.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Features</h4>
+                        <ul class="card-text">
+                            <li>Wide range of quiz categories</li>
+                            <li>Timer-based challenges</li>
+                            <li>Instant feedback on answers</li>
+                            <li>Performance tracking</li>
+                            <li>Downloadable quiz results</li>
+                            <li>User-friendly interface</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="container my-5" id="contact">
+        <h2 class="section-title">Contact Us</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Get in Touch</h4>
+                        <form id="contactForm">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="subject" class="form-label">Subject</label>
+                                <input type="text" class="form-control" id="subject" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea class="form-control" id="message" rows="4" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Contact Information</h4>
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-map-marker-alt me-3 text-primary"></i>
+                            <p class="mb-0">123 Islamic Street, Medina, Saudi Arabia</p>
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-phone-alt me-3 text-primary"></i>
+                            <p class="mb-0">+966 12 345 6789</p>
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-envelope me-3 text-primary"></i>
+                            <p class="mb-0">info@islamicquizmaster.com</p>
+                        </div>
+                        <div class="mt-4">
+                            <h5>Follow Us</h5>
+                            <div class="social-icons mt-3">
+                                <a href="#"><i class="fab fa-facebook"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                                <a href="#"><i class="fab fa-youtube"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Islamic Quiz Master</h5>
+                    <p>Enhancing Islamic knowledge through interactive quizzes and learning resources.</p>
+                    <div class="social-icons mt-3">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <div class="footer-links">
+                        <a href="#home">Home</a>
+                        <a href="#categories">Categories</a>
+                        <a href="#about">About</a>
+                        <a href="#contact">Contact</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5>Subscribe to Our Newsletter</h5>
+                    <p>Get the latest updates and new quiz notifications.</p>
+                    <form class="mt-3">
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Your email">
+                            <button class="btn btn-primary" type="button">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <hr class="my-4 bg-white">
+            <div class="text-center">
+                <p>&copy; 2023 Islamic Quiz Master. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sample quiz questions
+            const quizQuestions = {
+                quran: [
+                    {
+                        question: "How many chapters (Surahs) are there in the Holy Quran?",
+                        options: ["114", "99", "30", "66"],
+                        correct: 0
+                    },
+                    {
+                        question: "Which Surah is known as the heart of the Quran?",
+                        options: ["Surah Yasin", "Surah Al-Baqarah", "Surah Al-Ikhlas", "Surah Al-Fatiha"],
+                        correct: 0
+                    },
+                    {
+                        question: "Which is the longest Surah in the Quran?",
+                        options: ["Surah Al-Baqarah", "Surah Al-Imran", "Surah Al-Nisa", "Surah Al-Ma'idah"],
+                        correct: 0
+                    }
+                ],
+                hadith: [
+                    {
+                        question: "Who compiled the Sahih al-Bukhari?",
+                        options: ["Imam Bukhari", "Imam Muslim", "Imam Abu Dawood", "Imam Tirmidhi"],
+                        correct: 0
+                    },
+                    {
+                        question: "How many books are in Sahih al-Bukhari?",
+                        options: ["97", "93", "100", "87"],
+                        correct: 0
+                    },
+                    {
+                        question: "Which Hadith collection is considered second most authentic after Sahih al-Bukhari?",
+                        options: ["Sahih Muslim", "Sunan Abu Dawood", "Jami' at-Tirmidhi", "Sunan Ibn Majah"],
+                        correct: 0
+                    }
+                ],
+                history: [
+                    {
+                        question: "In which year did the Hijrah (migration) from Mecca to Medina take place?",
+                        options: ["622 CE", "610 CE", "632 CE", "624 CE"],
+                        correct: 0
+                    },
+                    {
+                        question: "Who was the first Caliph after Prophet Muhammad (PBUH)?",
+                        options: ["Abu Bakr As-Siddiq", "Umar ibn Al-Khattab", "Uthman ibn Affan", "Ali ibn Abi Talib"],
+                        correct: 0
+                    },
+                    {
+                        question: "Which battle was the first armed conflict between Muslims and Quraysh?",
+                        options: ["Battle of Badr", "Battle of Uhud", "Battle of Khandaq", "Battle of Tabuk"],
+                        correct: 0
+                    }
+                ],
+                prophets: [
+                    {
+                        question: "How many prophets are mentioned by name in the Quran?",
+                        options: ["25", "124,000", "313", "99"],
+                        correct: 0
+                    },
+                    {
+                        question: "Which prophet is known as 'Khalilullah' (Friend of Allah)?",
+                        options: ["Prophet Ibrahim (Abraham)", "Prophet Musa (Moses)", "Prophet Isa (Jesus)", "Prophet Muhammad"],
+                        correct: 0
+                    },
+                    {
+                        question: "Which prophet had the ability to interpret dreams?",
+                        options: ["Prophet Yusuf (Joseph)", "Prophet Dawud (David)", "Prophet Sulaiman (Solomon)", "Prophet Yunus (Jonah)"],
+                        correct: 0
+                    }
+                ],
+                fiqh: [
+                    {
+                        question: "How many times a day are Muslims required to pray?",
+                        options: ["5", "3", "7", "2"],
+                        correct: 0
+                    },
+                    {
+                        question: "What is the term for Islamic jurisprudence?",
+                        options: ["Fiqh", "Sharia", "Tafsir", "Hadith"],
+                        correct: 0
+                    },
+                    {
+                        question: "Which of the following is not one of the five pillars of Islam?",
+                        options: ["Jihad", "Salah", "Zakat", "Hajj"],
+                        correct: 0
+                    }
+                ],
+                seerah: [
+                    {
+                        question: "In which cave did Prophet Muhammad (PBUH) receive the first revelation?",
+                        options: ["Cave of Hira", "Cave of Thawr", "Cave of Uhud", "Cave of Safa"],
+                        correct: 0
+                    },
+                    {
+                        question: "Who was the first person to accept Islam?",
+                        options: ["Khadija bint Khuwaylid", "Abu Bakr As-Siddiq", "Ali ibn Abi Talib", "Zayd ibn Harithah"],
+                        correct: 0
+                    },
+                    {
+                        question: "How old was Prophet Muhammad (PBUH) when he died?",
+                        options: ["63 years", "60 years", "65 years", "58 years"],
+                        correct: 0
+                    }
+                ]
+            };
+
+            // DOM elements
+            const loginBtn = document.getElementById('loginBtn');
+            const adminBtn = document.getElementById('adminBtn');
+            const adminPanel = document.getElementById('adminPanel');
+            const startQuizBtn = document.getElementById('startQuizBtn');
+            const quizContainer = document.getElementById('quizContainer');
+            const resultsContainer = document.getElementById('resultsContainer');
+            const profileContainer = document.getElementById('profileContainer');
+            const quizCategories = document.querySelectorAll('.quiz-category');
+            const adminTabs = document.querySelectorAll('.admin-tab');
+            const adminContents = document.querySelectorAll('.admin-content');
+            const contactForm = document.getElementById('contactForm');
+            
+            // Quiz elements
+            const timer = document.getElementById('timer');
+            const questionText = document.getElementById('questionText');
+            const optionsContainer = document.getElementById('optionsContainer');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const progressBar = document.getElementById('progressBar');
+            
+            // Results elements
+            const scoreValue = document.getElementById('scoreValue');
+            const scoreProgressBar = document.getElementById('scoreProgressBar');
+            const resultMessage = document.getElementById('resultMessage');
+            const retakeBtn = document.getElementById('retakeBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const homeBtn = document.getElementById('homeBtn');
+            
+            // Global variables
+            let currentCategory = '';
+            let currentQuestions = [];
+            let currentQuestionIndex = 0;
+            let score = 0;
+            let timeLeft = 300; // 5 minutes in seconds
+            let timerInterval;
+            let userAnswers = [];
+            
+            // Login functionality
+            loginBtn.addEventListener('click', function() {
+                if (this.textContent === 'Login') {
+                    // Simulate login
+                    this.innerHTML = '<i class="fas fa-user me-2"></i>My Profile';
+                    adminBtn.style.display = 'block';
+                    
+                    // Change to logout functionality
+                    this.onclick = function() {
+                        this.innerHTML = '<i class="fas fa-sign-in-alt me-2"></i>Login';
+                        adminBtn.style.display = 'none';
+                        profileContainer.style.display = 'none';
+                    };
+                } else {
+                    // Show profile
+                    document.getElementById('profileName').textContent = 'Ahmed Hassan';
+                    document.getElementById('profileEmail').textContent = 'ahmed@example.com';
+                    profileContainer.style.display = 'block';
+                    quizContainer.style.display = 'none';
+                    resultsContainer.style.display = 'none';
+                    adminPanel.classList.remove('active');
+                }
+            });
+            
+            // Admin panel functionality
+            adminBtn.addEventListener('click', function() {
+                adminPanel.classList.toggle('active');
+                profileContainer.style.display = 'none';
+                quizContainer.style.display = 'none';
+                resultsContainer.style.display = 'none';
+            });
+            
+            // Admin tabs functionality
+            adminTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    adminTabs.forEach(t => t.classList.remove('active'));
+                    adminContents.forEach(c => c.classList.remove('active'));
+                    
+                    this.classList.add('active');
+                    document.getElementById(`${tabId}-tab`).classList.add('active');
+                });
+            });
+            
+            // Start quiz functionality
+            startQuizBtn.addEventListener('click', function() {
+                document.getElementById('categories').scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // Quiz category selection
+            quizCategories.forEach(category => {
+                category.addEventListener('click', function() {
+                    currentCategory = this.getAttribute('data-category');
+                    currentQuestions = [...quizQuestions[currentCategory]];
+                    currentQuestionIndex = 0;
+                    score = 0;
+                    timeLeft = 300;
+                    userAnswers = [];
+                    
+                    // Show quiz container
+                    quizContainer.style.display = 'block';
+                    resultsContainer.style.display = 'none';
+                    profileContainer.style.display = 'none';
+                    adminPanel.classList.remove('active');
+                    
+                    // Start timer
+                    startTimer();
+                    
+                    // Load first question
+                    loadQuestion();
+                });
+            });
+            
+            // Timer functionality
+            function startTimer() {
+                clearInterval(timerInterval);
+                timerInterval = setInterval(() => {
+                    timeLeft--;
+                    
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    timer.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        endQuiz();
+                    }
+                }, 1000);
+            }
+            
+            // Load question
+            function loadQuestion() {
+                const question = currentQuestions[currentQuestionIndex];
+                questionText.textContent = question.question;
+                
+                // Clear previous options
+                optionsContainer.innerHTML = '';
+                
+                // Add options
+                question.options.forEach((option, index) => {
+                    const optionElement = document.createElement('div');
+                    optionElement.className = 'option';
+                    optionElement.textContent = option;
+                    optionElement.dataset.index = index;
+                    
+                    optionElement.addEventListener('click', function() {
+                        // Remove selected class from all options
+                        document.querySelectorAll('.option').forEach(opt => {
+                            opt.classList.remove('selected');
+                        });
+                        
+                        // Add selected class to clicked option
+                        this.classList.add('selected');
+                        
+                        // Store user answer
+                        userAnswers[currentQuestionIndex] = index;
+                    });
+                    
+                    optionsContainer.appendChild(optionElement);
+                });
+                
+                // Update progress bar
+                const progress = ((currentQuestionIndex + 1) / currentQuestions.length) * 100;
+                progressBar.style.width = `${progress}%`;
+                
+                // Update buttons
+                prevBtn.disabled = currentQuestionIndex === 0;
+                nextBtn.textContent = currentQuestionIndex === currentQuestions.length - 1 ? 'Finish' : 'Next';
+            }
+            
+            // Next button functionality
+            nextBtn.addEventListener('click', function() {
+                if (currentQuestionIndex < currentQuestions.length - 1) {
+                    currentQuestionIndex++;
+                    loadQuestion();
+                } else {
+                    endQuiz();
+                }
+            });
+            
+            // Previous button functionality
+            prevBtn.addEventListener('click', function() {
+                if (currentQuestionIndex > 0) {
+                    currentQuestionIndex--;
+                    loadQuestion();
+                    
+                    // Restore selected option if exists
+                    if (userAnswers[currentQuestionIndex] !== undefined) {
+                        const selectedOption = document.querySelector(`.option[data-index="${userAnswers[currentQuestionIndex]}"]`);
+                        if (selectedOption) {
+                            selectedOption.classList.add('selected');
+                        }
+                    }
+                }
+            });
+            
+            // End quiz
+            function endQuiz() {
+                clearInterval(timerInterval);
+                
+                // Calculate score
+                score = 0;
+                for (let i = 0; i < currentQuestions.length; i++) {
+                    if (userAnswers[i] === currentQuestions[i].correct) {
+                        score++;
+                    }
+                }
+                
+                const percentage = Math.round((score / currentQuestions.length) * 100);
+                
+                // Show results
+                scoreValue.textContent = percentage;
+                scoreProgressBar.style.width = `${percentage}%`;
+                
+                // Set result message
+                if (percentage >= 80) {
+                    resultMessage.textContent = "Excellent! You have a strong knowledge of Islam.";
+                    scoreProgressBar.className = 'progress-bar bg-success';
+                } else if (percentage >= 60) {
+                    resultMessage.textContent = "Good job! Keep learning to improve your knowledge.";
+                    scoreProgressBar.className = 'progress-bar bg-warning';
+                } else {
+                    resultMessage.textContent = "Keep trying! Practice makes perfect.";
+                    scoreProgressBar.className = 'progress-bar bg-danger';
+                }
+                
+                // Show results container
+                quizContainer.style.display = 'none';
+                resultsContainer.style.display = 'block';
+            }
+            
+            // Retake quiz
+            retakeBtn.addEventListener('click', function() {
+                currentQuestionIndex = 0;
+                score = 0;
+                timeLeft = 300;
+                userAnswers = [];
+                
+                // Show quiz container
+                quizContainer.style.display = 'block';
+                resultsContainer.style.display = 'none';
+                
+                // Start timer
+                startTimer();
+                
+                // Load first question
+                loadQuestion();
+            });
+            
+            // Download results
+            downloadBtn.addEventListener('click', function() {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                
+                // Add title
+                doc.setFontSize(20);
+                doc.text('Islamic Quiz Master - Results', 105, 20, { align: 'center' });
+                
+                // Add category
+                doc.setFontSize(16);
+                doc.text(`Category: ${currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1)}`, 20, 40);
+                
+                // Add score
+                const percentage = Math.round((score / currentQuestions.length) * 100);
+                doc.text(`Score: ${score}/${currentQuestions.length} (${percentage}%)`, 20, 50);
+                
+                // Add date
+                const date = new Date().toLocaleDateString();
+                doc.text(`Date: ${date}`, 20, 60);
+                
+                // Save the PDF
+                doc.save('islamic-quiz-results.pdf');
+            });
+            
+            // Back to home
+            homeBtn.addEventListener('click', function() {
+                resultsContainer.style.display = 'none';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            
+            // Contact form submission
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // In a real application, this would send the form data to a server
+                alert('Thank you for your message! We will get back to you soon.');
+                this.reset();
+            });
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 70,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
